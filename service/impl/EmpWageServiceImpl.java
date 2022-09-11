@@ -15,18 +15,34 @@ public class EmpWageServiceImpl implements EmpWageService {
   @Override public String checkAttendance() {
     int attendaceNum = RandomUtil.getInt();
 
-    if (attendaceNum == 1) return "Employee is present full time.";
-    else if (attendaceNum == 2) return "Employee is present part time.";
-    else return "Employee is absent.";
+    switch (attendaceNum) {
+      case 0:
+        return "absent";
+      case 1:
+        return "present full time";
+      case 2:
+        return "present part time";
+
+      default:
+        return "Invalid.";
+    }
+
   }
 
   @Override
   public int getDailyWage() {
     String attendaceStr = checkAttendance();
-    System.out.println(attendaceStr);
+    System.out.println("Employee is " + attendaceStr);
 
-    if (attendaceStr.contains("full time")) hrsWorked = FULL_TIME_HRS;
-    else if (attendaceStr.contains("part time")) hrsWorked = PART_TIME_HRS;
+    switch (attendaceStr) {
+      case "present part time":
+        hrsWorked = PART_TIME_HRS;
+        break;
+
+      case "present full time":
+        hrsWorked = FULL_TIME_HRS;
+        break;
+    }
 
     int dailyWage = EMP_WAGE_PER_HOUR * hrsWorked;
 
