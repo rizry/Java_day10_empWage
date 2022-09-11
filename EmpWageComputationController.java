@@ -10,7 +10,7 @@ public class EmpWageComputationController {
 
     EmpWageService Emp = new EmpWageServiceImpl();
 
-    System.out.println("Employee's wage for this month: " + Emp.getMonthlyWage());
+    System.out.println("Employee's wage this month: " + Emp.getMonthlyWage());
   }
 
 }

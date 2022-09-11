@@ -7,6 +7,8 @@ public class EmpWageServiceImpl implements EmpWageService {
   final short EMP_WAGE_PER_HOUR = 20;
   final byte FULL_TIME_HRS = 8;
   final byte PART_TIME_HRS = 4;
+  final byte HRS_TO_WORK = 100;
+  final byte DAYS_TO_WORK = 20;
 
   short hrsWorked = 0;
 
@@ -15,15 +17,15 @@ public class EmpWageServiceImpl implements EmpWageService {
     int attendaceNum = RandomUtil.getInt();
 
     switch (attendaceNum) {
-    case 0:
-      return "absent";
-    case 1:
-      return "present full time";
-    case 2:
-      return "present part time";
+      case 0:
+        return "absent";
+      case 1:
+        return "present full time";
+      case 2:
+        return "present part time";
 
-    default:
-      return "Invalid.";
+      default:
+        return "Invalid.";
     }
 
   }
@@ -33,13 +35,13 @@ public class EmpWageServiceImpl implements EmpWageService {
     String attendaceStr = checkAttendance();
 
     switch (attendaceStr) {
-    case "present part time":
-      hrsWorked = PART_TIME_HRS;
-      break;
+      case "present part time":
+        hrsWorked = PART_TIME_HRS;
+        break;
 
-    case "present full time":
-      hrsWorked = FULL_TIME_HRS;
-      break;
+      case "present full time":
+        hrsWorked = FULL_TIME_HRS;
+        break;
 
     }
 
@@ -52,23 +54,34 @@ public class EmpWageServiceImpl implements EmpWageService {
   @Override
   public short getMonthlyWage() {
     short monthlyWage = 0;
-    short daysWorked;
+    short daysWorked = 0;
+    short hrsWorked = 0;
 
     System.out.print("Employee's daily wage: ");
 
-    for (daysWorked = 0; daysWorked < 20;) {
+    do {
+      short dailyWage = getDailyWage(); //getting employee's daily wage for each day
+      System.out.print(dailyWage + " ");
+      monthlyWage += dailyWage;
 
-			short dailyWage = getDailyWage(); //getting employee's daily wage for each day
-			System.out.print(dailyWage + " ");
+      String str = (dailyWage == 0) ? "absent" : dailyWage / EMP_WAGE_PER_HOUR == FULL_TIME_HRS ? "full time" : "part time";
 
-			if (dailyWage > 0) { //checking if the employee is present i.e. has dailyWage>0
-        monthlyWage += dailyWage;
-					daysWorked++; //only increasing number of days worked if the employee HAS worked, either full time or part time
-        }
+      switch (str) {
+        case "full time":
+          hrsWorked += 8;
+          daysWorked++;
+          break;
+        case "part time":
+          hrsWorked += 4;
+          daysWorked++;
+          break;
       }
-      System.out.println();
 
-      return monthlyWage;
+      } while (daysWorked < DAYS_TO_WORK && hrsWorked < HRS_TO_WORK);
+
+    System.out.println("\nEmployee has worked " + hrsWorked + " hours in " + daysWorked + " days this month.");
+
+    return monthlyWage;
 
     }
 
