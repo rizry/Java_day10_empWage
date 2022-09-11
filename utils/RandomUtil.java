@@ -9,4 +9,8 @@ public class RandomUtil {
     return RAN.nextBoolean();
   }
 
+  public static int getInt() {
+    return RAN.nextInt(3);
+  }
+
 }
