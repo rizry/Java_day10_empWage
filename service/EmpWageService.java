@@ -4,5 +4,7 @@ public interface EmpWageService {
 
   String checkAttendance();
 
-  int getDailyWage();
+  short getDailyWage();
+
+  short getMonthlyWage();
 }
