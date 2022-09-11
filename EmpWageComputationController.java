@@ -10,7 +10,7 @@ public class EmpWageComputationController {
 
     EmpWageService Emp = new EmpWageServiceImpl();
 
-    System.out.println(Emp.checkAttendance());
+    System.out.println("Employee's today's wage: " + Emp.getDailyWage());
   }
 
 }

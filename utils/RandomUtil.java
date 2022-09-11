@@ -8,4 +8,5 @@ public class RandomUtil {
   public static boolean getBoolean() {
     return RAN.nextBoolean();
   }
+
 }
