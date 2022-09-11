@@ -10,7 +10,8 @@ public class EmpWageServiceImpl implements EmpWageService {
   final byte HRS_TO_WORK = 100;
   final byte DAYS_TO_WORK = 20;
 
-  short hrsWorked = 0;
+  short monthlyWage;
+  short hrsWorked;
 
   @Override
   public String checkAttendance() {
@@ -53,9 +54,8 @@ public class EmpWageServiceImpl implements EmpWageService {
 
   @Override
   public short getMonthlyWage() {
-    short monthlyWage = 0;
-    short daysWorked = 0;
     short hrsWorked = 0;
+    short daysWorked = 0;
 
     System.out.print("Employee's daily wage: ");
 
@@ -77,12 +77,12 @@ public class EmpWageServiceImpl implements EmpWageService {
           break;
       }
 
-      } while (daysWorked < DAYS_TO_WORK && hrsWorked < HRS_TO_WORK);
+    } while (daysWorked < DAYS_TO_WORK && hrsWorked < HRS_TO_WORK);
 
     System.out.println("\nEmployee has worked " + hrsWorked + " hours in " + daysWorked + " days this month.");
 
     return monthlyWage;
 
-    }
+  }
 
 }
