@@ -10,7 +10,11 @@ public class EmpWageComputationController {
 
     EmpWageService Emp = new EmpWageServiceImpl();
 
-    System.out.println("Employee's wage this month: " + Emp.getMonthlyWage());
+    System.out.println("Company1 employee's wage in a month: " + Emp.getMonthlyWage((short) 20, (short) 100, (byte) 20) + "\n");
+
+    System.out.println("Company2 employee's wage in a month: " + Emp.getMonthlyWage((short) 30, (short) 120, (byte) 25) + "\n");
+
+    System.out.println("Company3 employee's wage in a month: " + Emp.getMonthlyWage((short) 50, (short) 130, (byte) 25));
   }
 
 }

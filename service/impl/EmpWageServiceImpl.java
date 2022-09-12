@@ -4,14 +4,14 @@ import com.empwage.service.EmpWageService;
 import com.empwage.utils.RandomUtil;
 
 public class EmpWageServiceImpl implements EmpWageService {
-  final short EMP_WAGE_PER_HOUR = 20;
   final byte FULL_TIME_HRS = 8;
   final byte PART_TIME_HRS = 4;
-  final byte HRS_TO_WORK = 100;
-  final byte DAYS_TO_WORK = 20;
+  short empWagePerHr;
+  short hrsToWork;
+  byte daysToWork;
 
-  short monthlyWage;
   short hrsWorked;
+  short monthlyWage;
 
   @Override
   public String checkAttendance() {
@@ -46,27 +46,31 @@ public class EmpWageServiceImpl implements EmpWageService {
 
     }
 
-    short dailyWage = (short) (EMP_WAGE_PER_HOUR * hrsWorked);
+    short dailyWage = (short) (empWagePerHr * hrsWorked);
 
     return dailyWage;
-
   }
 
   @Override
-  public short getMonthlyWage() {
-    short hrsWorked = 0;
+  public short getMonthlyWage(short empWagePerHr, short hrsToWork, byte daysToWork) {
+    this.empWagePerHr = empWagePerHr;
+    this.hrsToWork = hrsToWork;
+    this.daysToWork = daysToWork;
+
+    monthlyWage = 0;
     short daysWorked = 0;
+    short hrsWorked = 0;
 
     System.out.print("Employee's daily wage: ");
 
     do {
-      short dailyWage = getDailyWage(); //getting employee's daily wage for each day
-      System.out.print(dailyWage + " ");
-      monthlyWage += dailyWage;
+			short dailyWage = getDailyWage(); //getting employee's daily wage for each day
+			System.out.print(dailyWage + " ");
+			monthlyWage += dailyWage;
 
-      String str = (dailyWage == 0) ? "absent" : dailyWage / EMP_WAGE_PER_HOUR == FULL_TIME_HRS ? "full time" : "part time";
+			String str = (dailyWage == 0) ? "absent" : dailyWage / empWagePerHr == FULL_TIME_HRS ? "full time" : "part time";
 
-      switch (str) {
+			switch (str) {
         case "full time":
           hrsWorked += 8;
           daysWorked++;
@@ -77,12 +81,11 @@ public class EmpWageServiceImpl implements EmpWageService {
           break;
       }
 
-    } while (daysWorked < DAYS_TO_WORK && hrsWorked < HRS_TO_WORK);
+    } while (daysWorked < daysToWork && hrsWorked < hrsToWork);
 
-    System.out.println("\nEmployee has worked " + hrsWorked + " hours in " + daysWorked + " days this month.");
+    System.out.println("Employee has worked " + hrsWorked + " hours in " + daysWorked + " days this month.");
 
     return monthlyWage;
-
   }
 
 }
