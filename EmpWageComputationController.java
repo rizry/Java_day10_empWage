@@ -15,6 +15,8 @@ public class EmpWageComputationController {
     empWageBuilder.addCompanyEmpWage("Google", (short) 50, (short) 25, (short) 130);
 
     empWageBuilder.getMonthlyWage();
+
+    empWageBuilder.getWageByCompany();
   }
 
 }
