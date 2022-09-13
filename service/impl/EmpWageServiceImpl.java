@@ -34,18 +34,20 @@ public class EmpWageServiceImpl implements EmpWageService {
     do {
 			short dailyWage = getDailyWage(c.empWagePerHr); //getting employee's daily wage for each day
 			monthlyWage += dailyWage;
+			c.addDailyEmpWage(dailyWage);
 
 			String str = (dailyWage == 0) ? "absent" : dailyWage / c.empWagePerHr == FULL_TIME_HRS ? "full time" : "part time";
 
 			switch (str) {
-        case "full time":
-          hrsWorked += 8;
-          daysWorked++;
-          break;
-        case "part time":
-          hrsWorked += 4;
-          daysWorked++;
-          break;
+      case "full time":
+        hrsWorked += 8;
+        daysWorked++;
+        break;
+
+      case "part time":
+        hrsWorked += 4;
+        daysWorked++;
+        break;
       }
 
     } while (daysWorked < c.daysToWork && hrsWorked < c.hrsToWork);
@@ -83,15 +85,14 @@ public class EmpWageServiceImpl implements EmpWageService {
     int attendaceNum = RandomUtil.getInt();
 
     switch (attendaceNum) {
-    case 0:
-      return "absent";
-    case 1:
-      return "present full time";
-    case 2:
-      return "present part time";
-
-    default:
-      return "Invalid.";
+      case 0:
+        return "absent";
+      case 1:
+        return "present full time";
+      case 2:
+        return "present part time";
+      default:
+        return "Invalid.";
     }
 
   }
