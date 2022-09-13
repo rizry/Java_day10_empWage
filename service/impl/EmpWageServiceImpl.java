@@ -4,96 +4,100 @@ import com.empwage.service.EmpWageService;
 import com.empwage.utils.RandomUtil;
 
 public class EmpWageServiceImpl implements EmpWageService {
-  final byte FULL_TIME_HRS = 8;
-  final byte PART_TIME_HRS = 4;
-  String name;
-  short empWagePerHr;
-  byte daysToWork;
-  short hrsToWork;
+		final byte FULL_TIME_HRS = 8;
+		final byte PART_TIME_HRS = 4;
+		CompanyEmpWage[] companyEmpWageArray;
+		short numOfCompany;
 
-  short monthlyWage;
-  short daysWorked;
-  short hrsWorked;
+		public EmpWageServiceImpl() {
+				companyEmpWageArray = new CompanyEmpWage[5];
 
-  public EmpWageServiceImpl(String name, short empWagePerHr, short hrsToWork, byte daysToWork) {
-    this.name = name;
-    this.empWagePerHr = empWagePerHr;
-    this.hrsToWork = hrsToWork;
-    this.daysToWork = daysToWork;
+		}
 
-  }
+		public void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth) {
+				companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+				numOfCompany++;
+		}
 
-  @Override
-  public String checkAttendance() {
-    int attendaceNum = RandomUtil.getInt();
+		public void getMonthlyWage() {
 
-    switch (attendaceNum) {
-    case 0:
-      return "absent";
-    case 1:
-      return "present full time";
-    case 2:
-      return "present part time";
+				for (CompanyEmpWage c : companyEmpWageArray) {
+						if (c != null) {
+								c.setMonthlyEmpWage(this.getMonthlyWage(c));
+								System.out.println(c);
+						}
+				}
 
-    default:
-      return "Invalid.";
-    }
+		}
 
-  }
+		@Override
+		public short getMonthlyWage(CompanyEmpWage c) {
 
-  @Override
-  public short getDailyWage() {
-    String attendaceStr = checkAttendance();
-    short hrsWorked = 0;
+				short monthlyWage = 0, daysWorked = 0, hrsWorked = 0;
 
-    switch (attendaceStr) {
-    case "present part time":
-      hrsWorked = PART_TIME_HRS;
-      break;
+				do {
+						short dailyWage = getDailyWage(c.empWagePerHr); //getting employee's daily wage for each day
+						monthlyWage += dailyWage;
 
-    case "present full time":
-      hrsWorked = FULL_TIME_HRS;
-      break;
+						String str = (dailyWage == 0) ? "absent" : dailyWage / c.empWagePerHr == FULL_TIME_HRS ? "full time" : "part time";
 
-    }
+						switch (str) {
+								case "full time":
+										hrsWorked += 8;
+										daysWorked++;
+										break;
+								case "part time":
+										hrsWorked += 4;
+										daysWorked++;
+										break;
+						}
 
-    short dailyWage = (short) (empWagePerHr * hrsWorked);
+				} while (daysWorked < c.daysToWork && hrsWorked < c.hrsToWork);
 
-    return dailyWage;
+				return monthlyWage;
 
-  }
+		}
 
-  @Override
-  public short getMonthlyWage() {
+		@Override
+		public short getDailyWage(short empWagePerHr) {
+				String attendaceStr = checkAttendance();
+				short hrsWorked = 0;
 
-    do {
-			short dailyWage = getDailyWage(); //getting employee's daily wage for each day
-			monthlyWage += dailyWage;
+				switch (attendaceStr) {
+						case "present part time":
+								hrsWorked = PART_TIME_HRS;
+								break;
 
-			String str = (dailyWage == 0) ? "absent" : dailyWage / empWagePerHr == FULL_TIME_HRS ? "full time" : "part time";
+						case "present full time":
+								hrsWorked = FULL_TIME_HRS;
+								break;
 
-			switch (str) {
-      case "full time":
-        hrsWorked += 8;
-        daysWorked++;
-        break;
-      case "part time":
-        hrsWorked += 4;
-        daysWorked++;
-        break;
-      }
+						default:
+								hrsWorked = 0;
+				}
 
-    } while (daysWorked < daysToWork && hrsWorked < hrsToWork);
+				short dailyWage = (short) (empWagePerHr * hrsWorked);
 
-    return monthlyWage;
+				return dailyWage;
 
-  }
+		}
 
-  @Override
-  public String toString() {
-    return "Employee at " + name + " worked " + hrsWorked + " hours in " + daysWorked + " days this month.\nAnd made "
-    + monthlyWage + "$\n";
+		@Override
+		public String checkAttendance() {
+				int attendaceNum = RandomUtil.getInt();
 
-  }
+				switch (attendaceNum) {
+						case 0:
+								return "absent";
+						case 1:
+								return "present full time";
+						case 2:
+								return "present part time";
+
+						default:
+								return "Invalid.";
+				}
+
+		}
 
 }

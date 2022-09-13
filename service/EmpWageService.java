@@ -1,10 +1,16 @@
 package com.empwage.service;
 
+import com.empwage.service.impl.CompanyEmpWage;
+
 public interface EmpWageService {
 
-  String checkAttendance();
+		void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth);
 
-  short getDailyWage();
+		void getMonthlyWage();
 
-  short getMonthlyWage();
+		short getMonthlyWage(CompanyEmpWage c);
+
+		short getDailyWage(short empWagePerHr);
+
+		String checkAttendance();
 }
