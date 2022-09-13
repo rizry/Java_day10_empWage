@@ -4,13 +4,13 @@ import com.empwage.service.impl.CompanyEmpWage;
 
 public interface EmpWageService {
 
-		void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth);
+  void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth);
 
-		void getMonthlyWage();
+  void getMonthlyWage();
 
-		short getMonthlyWage(CompanyEmpWage c);
+  short getMonthlyWage(CompanyEmpWage c);
 
-		short getDailyWage(short empWagePerHr);
+  short getDailyWage(short empWagePerHr);
 
-		String checkAttendance();
+  String checkAttendance();
 }
