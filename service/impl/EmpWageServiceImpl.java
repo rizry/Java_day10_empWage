@@ -14,11 +14,13 @@ public class EmpWageServiceImpl implements EmpWageService {
 
   }
 
+  @Override
   public void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth) {
     companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
     numOfCompany++;
   }
 
+  @Override
   public void getMonthlyWage() {
 
     for (CompanyEmpWage c : companyEmpWageArray) {
@@ -60,20 +62,20 @@ public class EmpWageServiceImpl implements EmpWageService {
 
   @Override
   public short getDailyWage(short empWagePerHr) {
-    short hrsWorked = 0;
     String attendaceStr = checkAttendance();
+    short hrsWorked = 0;
 
     switch (attendaceStr) {
-      case "present part time":
-        hrsWorked = PART_TIME_HRS;
-        break;
+    case "present part time":
+      hrsWorked = PART_TIME_HRS;
+      break;
 
-      case "present full time":
-        hrsWorked = FULL_TIME_HRS;
-        break;
+    case "present full time":
+      hrsWorked = FULL_TIME_HRS;
+      break;
 
-      default:
-        hrsWorked = 0;
+    default:
+      hrsWorked = 0;
     }
 
     short dailyWage = (short) (empWagePerHr * hrsWorked);
@@ -87,15 +89,15 @@ public class EmpWageServiceImpl implements EmpWageService {
     int attendaceNum = RandomUtil.getInt();
 
     switch (attendaceNum) {
-      case 0:
-        return "absent";
-      case 1:
-        return "present full time";
-      case 2:
-        return "present part time";
+    case 0:
+      return "absent";
+    case 1:
+      return "present full time";
+    case 2:
+      return "present part time";
 
-      default:
-        return "Invalid.";
+    default:
+      return "Invalid.";
     }
 
   }
