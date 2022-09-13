@@ -8,13 +8,17 @@ public class EmpWageComputationController {
   public static void main(String[] args) {
     System.out.println("--Welcome to Employee Wage Computation Program--");
 
-    EmpWageService Emp = new EmpWageServiceImpl();
+    EmpWageService Reliance = new EmpWageServiceImpl("Reliance", (short) 20, (short) 100, (byte) 20);
+    EmpWageService Amazon = new EmpWageServiceImpl("Amazon", (short) 30, (short) 120, (byte) 25);
+    EmpWageService Google = new EmpWageServiceImpl("Google", (short) 50, (short) 130, (byte) 25);
 
-    System.out.println("Company1 employee's wage in a month: " + Emp.getMonthlyWage((short) 20, (short) 100, (byte) 20) + "\n");
+    Reliance.getMonthlyWage();
+    Amazon.getMonthlyWage();
+    Google.getMonthlyWage();
 
-    System.out.println("Company2 employee's wage in a month: " + Emp.getMonthlyWage((short) 30, (short) 120, (byte) 25) + "\n");
-
-    System.out.println("Company3 employee's wage in a month: " + Emp.getMonthlyWage((short) 50, (short) 130, (byte) 25));
+    System.out.println(Reliance);
+    System.out.println(Amazon);
+    System.out.println(Google);
   }
 
 }

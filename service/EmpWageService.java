@@ -6,5 +6,5 @@ public interface EmpWageService {
 
   short getDailyWage();
 
-  short getMonthlyWage(short empWagePerHr, short hrsToWork, byte daysToWork);
+  short getMonthlyWage();
 }
