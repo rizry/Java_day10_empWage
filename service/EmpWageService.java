@@ -4,7 +4,7 @@ import com.empwage.service.impl.CompanyEmpWage;
 
 public interface EmpWageService {
 
-  void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth);
+  void addCompanyEmpWage(String company, short empWagePerHr, short daysToWork, short hrsToWork);
 
   void getMonthlyWage();
 

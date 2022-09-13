@@ -10,9 +10,9 @@ public class EmpWageComputationController {
 
     EmpWageService empWageBuilder = new EmpWageServiceImpl();
 
-    empWageBuilder.addCompanyEmpWage("Reliance", (short) 20, (short) 100, (byte) 20);
-    empWageBuilder.addCompanyEmpWage("Amazon", (short) 30, (short) 120, (byte) 25);
-    empWageBuilder.addCompanyEmpWage("Google", (short) 50, (short) 130, (byte) 25);
+    empWageBuilder.addCompanyEmpWage("Reliance", (short) 20, (short) 20, (short) 100);
+    empWageBuilder.addCompanyEmpWage("Amazon", (short) 30, (short) 25, (short) 120);
+    empWageBuilder.addCompanyEmpWage("Google", (short) 50, (short) 25, (short) 130);
 
     empWageBuilder.getMonthlyWage();
   }

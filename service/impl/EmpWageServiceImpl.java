@@ -1,29 +1,23 @@
 package com.empwage.service.impl;
 
+import java.util.ArrayList;
 import com.empwage.service.EmpWageService;
 import com.empwage.utils.RandomUtil;
 
 public class EmpWageServiceImpl implements EmpWageService {
   final byte FULL_TIME_HRS = 8;
   final byte PART_TIME_HRS = 4;
-  CompanyEmpWage[] companyEmpWageArray;
-  short numOfCompany;
-
-  public EmpWageServiceImpl() {
-    companyEmpWageArray = new CompanyEmpWage[5];
-
-  }
+  ArrayList<CompanyEmpWage> companyEmpWageList = new ArrayList<>();
 
   @Override
-  public void addCompanyEmpWage(String company, short empRatePerHour, short numOfWorkingDays, int maxHoursPerMonth) {
-    companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
-    numOfCompany++;
+  public void addCompanyEmpWage(String company, short empWagePerHr, short daysToWork, short hrsToWork) {
+    companyEmpWageList.add(new CompanyEmpWage(company, empWagePerHr, daysToWork, hrsToWork));
   }
 
   @Override
   public void getMonthlyWage() {
 
-    for (CompanyEmpWage c : companyEmpWageArray) {
+    for (CompanyEmpWage c : companyEmpWageList) {
       if (c != null) {
         c.setMonthlyEmpWage(this.getMonthlyWage(c));
         System.out.println(c);
@@ -44,14 +38,14 @@ public class EmpWageServiceImpl implements EmpWageService {
 			String str = (dailyWage == 0) ? "absent" : dailyWage / c.empWagePerHr == FULL_TIME_HRS ? "full time" : "part time";
 
 			switch (str) {
-      case "full time":
-        hrsWorked += 8;
-        daysWorked++;
-        break;
-      case "part time":
-        hrsWorked += 4;
-        daysWorked++;
-        break;
+        case "full time":
+          hrsWorked += 8;
+          daysWorked++;
+          break;
+        case "part time":
+          hrsWorked += 4;
+          daysWorked++;
+          break;
       }
 
     } while (daysWorked < c.daysToWork && hrsWorked < c.hrsToWork);
@@ -66,16 +60,16 @@ public class EmpWageServiceImpl implements EmpWageService {
     short hrsWorked = 0;
 
     switch (attendaceStr) {
-    case "present part time":
-      hrsWorked = PART_TIME_HRS;
-      break;
+      case "present part time":
+        hrsWorked = PART_TIME_HRS;
+        break;
 
-    case "present full time":
-      hrsWorked = FULL_TIME_HRS;
-      break;
+      case "present full time":
+        hrsWorked = FULL_TIME_HRS;
+        break;
 
-    default:
-      hrsWorked = 0;
+      default:
+        hrsWorked = 0;
     }
 
     short dailyWage = (short) (empWagePerHr * hrsWorked);
